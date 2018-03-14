@@ -1,21 +1,23 @@
-function setDate() {
-  const now = new Date();
-  const seconds = now.getSeconds();
-  const minutes = now.getMinutes();
-  const hours = now.getHours();
-  const degSec = seconds * 6 + 90;
-  const degMin = minutes * 6 + 90;
-  const degHrs = hours * 30 + 90;
+const secondHand = document.querySelector('.second-hand');
+  const minsHand = document.querySelector('.min-hand');
+  const hourHand = document.querySelector('.hour-hand');
 
-  document.querySelector('.second-hand').style.transform = "rotate(" + degSec + "deg)";
-  document.querySelector('.min-hand').style.transform = "rotate(" + degMin + "deg)";
-  document.querySelector('.hour-hand').style.transform = "rotate(" + degHrs + "deg)";
-  console.log(hours + ":" + minutes + ":" + seconds);
-}
+  function setDate() {
+    const now = new Date();
 
-//  0 = 90deg
-//  1 = 96deg  
-// 15 = 180deg
+    const seconds = now.getSeconds();
+    const secondsDegrees = ((seconds / 60) * 360) + 90;
+    secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
 
+    const mins = now.getMinutes();
+    const minsDegrees = ((mins / 60) * 360) + ((seconds/60)*6) + 90;
+    minsHand.style.transform = `rotate(${minsDegrees}deg)`;
 
-setInterval(setDate, 1000) 
+    const hour = now.getHours();
+    const hourDegrees = ((hour / 12) * 360) + ((mins/60)*30) + 90;
+    hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+  }
+
+  setInterval(setDate, 1000);
+
+  setDate();
